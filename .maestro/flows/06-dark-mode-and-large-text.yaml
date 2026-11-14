@@ -1,0 +1,13 @@
+# Stage 7c regression: the app stays usable in dark mode. Run on a device set to the largest font size.
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- tapOn: "Profile"
+- tapOn: "Dark"
+- takeScreenshot: profile-dark
+- tapOn: "Home"
+- takeScreenshot: orders-dark
+- tapOn: "Route"
+- takeScreenshot: route-dark
+- tapOn: "Profile"
+- tapOn: "System"

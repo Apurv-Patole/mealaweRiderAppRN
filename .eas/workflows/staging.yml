@@ -1,0 +1,34 @@
+name: Staging preview build and TestFlight
+
+# No `on:` trigger: this only runs when you explicitly invoke it:
+#   npm run workflow:staging
+#
+# Android: `staging-preview` profile, an internal-distribution APK on the staging
+# channel and staging backend. Build only, no store submit.
+#
+# iOS: `staging-testflight` profile (staging channel and backend, but STORE
+# distribution: the `staging` profile is ad-hoc, which TestFlight rejects) submitted
+# via the `internal` submit profile.
+
+jobs:
+  build_android:
+    name: Build Android (staging preview)
+    type: build
+    params:
+      platform: android
+      profile: staging-preview
+
+  build_ios:
+    name: Build iOS (staging)
+    type: build
+    params:
+      platform: ios
+      profile: staging-testflight
+
+  submit_ios:
+    name: Submit iOS to TestFlight
+    type: submit
+    needs: [build_ios]
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: internal

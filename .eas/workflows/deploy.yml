@@ -1,0 +1,50 @@
+name: Production build
+
+# No `on:` trigger: this only runs when you explicitly invoke it:
+#   npm run workflow:deploy
+#
+# Android: builds the Play Store AAB (`production` profile). Submit is a separate,
+# manual step on purpose: production is never reached by an automatic submit. The
+# `production` submit profile in eas.json has `releaseStatus: "completed"`, an
+# immediate 100% rollout with no review gate. Same path as the customer app: submit
+# to `internal`, validate, then alpha, beta, and promote the SAME tested binary to
+# production from Play Console (never rebuild or resubmit).
+#   npm run submit:android:internal
+# Android submit needs `play-store-credentials.json` at the repo root when it runs
+# (git-ignored; provided locally or at CI runtime).
+#
+# iOS: `production` profile (store distribution) built and submitted to TestFlight.
+# TestFlight is not the App Store: nothing goes public until you press "Submit for
+# Review" in App Store Connect. The App Store Connect API key is read from EAS's
+# credential store (`eas credentials -p ios`), not a local .p8 file.
+
+jobs:
+  build_android:
+    name: Build Android (production)
+    type: build
+    params:
+      platform: android
+      profile: production
+
+  # submit_android:
+  #   name: Submit Android to Internal testing
+  #   type: submit
+  #   needs: [build_android]
+  #   params:
+  #     build_id: ${{ needs.build_android.outputs.build_id }}
+  #     profile: internal
+
+  build_ios:
+    name: Build iOS (production)
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  submit_ios:
+    name: Submit iOS to TestFlight
+    type: submit
+    needs: [build_ios]
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: production

@@ -1,0 +1,52 @@
+# IMPORTANT: once this file exists, EAS CLI stops respecting .gitignore for the
+# build archive (it does not merge the two). Everything below therefore mirrors
+# .gitignore by hand; keep the two in sync when either changes.
+# See https://expo.fyi/eas-build-archive
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Locally generated native folders (gitignored). If these exist when `eas build`
+# runs, EAS treats the project as bare workflow, which breaks runtimeVersion's
+# "appVersion" policy. Always let EAS run its own prebuild.
+android/
+ios/
+.kotlin/
+
+# Signing / credentials: never let these reach a cloud build worker.
+# (google-services.json and GoogleService-Info.plist are NOT listed: they are
+# client config, not secrets, and the build needs them. The customer app commits them too.)
+*.jks
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+play-store-credentials.json
+*service-account*.json
+
+# built binaries (a stray local APK/AAB can silently bloat the upload)
+*.apk
+*.aab
+
+# Metro, debug, OS, local env
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+install.log
+.DS_Store
+.env*.local
+*.tsbuildinfo
+
+# git worktrees and AI tooling: never needed by a cloud build
+.worktrees/
+.superpowers/
+repomix-output.*
+.maestro/

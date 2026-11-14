@@ -1,0 +1,27 @@
+# Fresh install to the Orders tab: skips onboarding, signs in with the staging test rider, and
+# skips the permission wizard only if it appears.
+appId: com.mealawerider.app
+---
+- launchApp:
+    clearState: true
+    permissions: { location: allow, notifications: allow, camera: allow }
+- runFlow:
+    when:
+      visible: "Skip"
+    commands:
+      - tapOn: "Skip"
+- assertVisible: "Mealawe Rider"
+- tapOn:
+    id: "phone-input"
+- inputText: ${RIDER_PHONE}
+- tapOn: "Send code"
+- tapOn:
+    id: "otp-input"
+- inputText: ${RIDER_OTP}
+- tapOn: "Verify and continue"
+- runFlow:
+    when:
+      visible: "Continue.*"
+    commands:
+      - tapOn: "Continue.*"
+- assertVisible: "Home"

@@ -1,0 +1,14 @@
+# Critical path 3: pickup then delivery with proof photo. Needs an assigned order for the test rider
+# (create one from the admin dashboard before the run) and an online shift (flow 02 first half).
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- tapOn: "Home"
+- tapOn: "Order .*"
+- tapOn: "Picked up"
+- assertVisible: "Delivered|Deliver"
+- tapOn: "Deliver"
+- tapOn: "Doorstep"
+- tapOn: "Take photo"
+- tapOn: "Confirm delivery"
+- assertVisible: "Delivered"

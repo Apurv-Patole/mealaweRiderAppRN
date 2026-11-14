@@ -1,0 +1,13 @@
+# Critical path 4: an action taken offline waits, then sends by itself when the connection returns.
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- tapOn: "Home"
+- tapOn: "Order .*"
+- setAirplaneMode: enabled
+- tapOn: "Picked up"
+- assertVisible: "Waiting to send"
+- setAirplaneMode: disabled
+- extendedWaitUntil:
+    notVisible: "Waiting to send"
+    timeout: 60000

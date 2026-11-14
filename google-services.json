@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "366885039976",
+    "project_id": "mealawerider",
+    "storage_bucket": "mealawerider.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366885039976:android:4c280eef1558e36a1af0dd",
+        "android_client_info": {
+          "package_name": "com.mealawerider.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO2Gj-CsJL6mccxC4RQNHvNeeVMHA2De0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

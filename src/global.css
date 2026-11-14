@@ -1,0 +1,101 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+/* ─── Mealawe Rider design tokens (light / dark) ────────────────────
+   Palette is the rider app's own (see src/theme/palette.ts, the TS mirror).
+   RGB triples so `rgb(var(--token) / <alpha>)` opacity works.
+   Never put a raw hex in a screen: use these tokens or the status tokens. */
+@layer theme {
+  :root {
+    --primary: 3 127 86;               /* #037f56 emerald */
+    --primary-foreground: 255 255 255;
+    --primary-pressed: 2 105 74;       /* #02694a */
+    --primary-soft: 230 242 238;       /* #e6f2ee */
+    --background: 245 247 243;         /* #f5f7f3 */
+    --card: 255 255 255;
+    --muted: 235 239 234;              /* #ebefea */
+    --muted-foreground: 104 113 107;   /* #68716b (4.68:1 on the page) */
+    --foreground: 23 28 25;            /* #171c19 */
+    --border: 231 236 231;             /* #e7ece7 */
+    --danger: 185 28 28;               /* #b91c1c */
+    --danger-foreground: 255 255 255;
+    --accent-gold: 255 179 0;          /* #ffb300 */
+    --accent-mint: 96 200 188;         /* #60c8bc */
+
+    /* Status: fill (dots, bars, icons), ink (text on light), soft (badge bg) */
+    --status-assigned-fill: 59 130 246;    --status-assigned-ink: 29 78 216;    --status-assigned-soft: 219 234 254;
+    --status-ready-fill: 245 158 11;       --status-ready-ink: 180 83 9;        --status-ready-soft: 254 243 199;
+    --status-ontheway-fill: 96 200 188;    --status-ontheway-ink: 15 95 86;     --status-ontheway-soft: 217 244 240;
+    --status-done-fill: 99 171 69;         --status-done-ink: 57 114 30;        --status-done-soft: 220 252 231;
+    --status-cancelled-fill: 239 68 68;    --status-cancelled-ink: 185 28 28;   --status-cancelled-soft: 254 226 226;
+    --status-offline-fill: 148 163 184;    --status-offline-ink: 109 109 109;   --status-offline-soft: 245 246 249;
+    --status-money-fill: 255 179 0;        --status-money-ink: 138 90 0;        --status-money-soft: 255 243 209;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary: 52 200 149;             /* #34c895 */
+      --primary-foreground: 14 20 17;    /* #0e1411 on primary */
+      --primary-pressed: 40 172 126;     /* #28ac7e */
+      --primary-soft: 27 46 37;          /* #1b2e25 */
+      --background: 14 20 17;            /* #0e1411 green-tinted near-black */
+      --card: 22 29 25;                  /* #161d19 */
+      --muted: 31 40 35;                 /* #1f2823 */
+      --muted-foreground: 163 174 166;   /* #a3aea6 */
+      --foreground: 238 243 239;         /* #eef3ef */
+      --border: 38 49 43;                /* #26312b */
+      --danger: 239 68 68;
+      --danger-foreground: 14 20 17;
+
+      --status-assigned-ink: 96 165 250;    --status-assigned-soft: 32 47 71;
+      --status-ready-ink: 245 158 11;       --status-ready-soft: 65 52 29;
+      --status-ontheway-ink: 96 200 188;    --status-ontheway-soft: 39 60 61;
+      --status-done-ink: 120 189 84;        --status-done-soft: 39 55 39;
+      --status-cancelled-ink: 248 113 113;   --status-cancelled-soft: 64 36 39;
+      --status-offline-ink: 163 169 179;    --status-offline-soft: 48 53 60;
+      --status-money-ink: 255 179 0;        --status-money-soft: 67 56 27;
+    }
+  }
+}
+
+@theme inline {
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-primary-pressed: rgb(var(--primary-pressed));
+  --color-primary-soft: rgb(var(--primary-soft));
+  --color-background: rgb(var(--background));
+  --color-card: rgb(var(--card));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-foreground: rgb(var(--foreground));
+  --color-border: rgb(var(--border));
+  --color-danger: rgb(var(--danger));
+  --color-danger-foreground: rgb(var(--danger-foreground));
+  --color-accent-gold: rgb(var(--accent-gold));
+  --color-accent-mint: rgb(var(--accent-mint));
+
+  /* Status tokens → bg-status-done-soft, text-status-ready-ink, … */
+  --color-status-assigned-fill: rgb(var(--status-assigned-fill));
+  --color-status-assigned-ink: rgb(var(--status-assigned-ink));
+  --color-status-assigned-soft: rgb(var(--status-assigned-soft));
+  --color-status-ready-fill: rgb(var(--status-ready-fill));
+  --color-status-ready-ink: rgb(var(--status-ready-ink));
+  --color-status-ready-soft: rgb(var(--status-ready-soft));
+  --color-status-ontheway-fill: rgb(var(--status-ontheway-fill));
+  --color-status-ontheway-ink: rgb(var(--status-ontheway-ink));
+  --color-status-ontheway-soft: rgb(var(--status-ontheway-soft));
+  --color-status-done-fill: rgb(var(--status-done-fill));
+  --color-status-done-ink: rgb(var(--status-done-ink));
+  --color-status-done-soft: rgb(var(--status-done-soft));
+  --color-status-cancelled-fill: rgb(var(--status-cancelled-fill));
+  --color-status-cancelled-ink: rgb(var(--status-cancelled-ink));
+  --color-status-cancelled-soft: rgb(var(--status-cancelled-soft));
+  --color-status-offline-fill: rgb(var(--status-offline-fill));
+  --color-status-offline-ink: rgb(var(--status-offline-ink));
+  --color-status-offline-soft: rgb(var(--status-offline-soft));
+  --color-status-money-fill: rgb(var(--status-money-fill));
+  --color-status-money-ink: rgb(var(--status-money-ink));
+  --color-status-money-soft: rgb(var(--status-money-soft));
+}

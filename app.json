@@ -1,0 +1,116 @@
+{
+  "expo": {
+    "name": "Mealawe Rider",
+    "slug": "MealaweRiderAppRN",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "mealawerider",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.mealawerider.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": [
+          "location",
+          "remote-notification"
+        ],
+        "NSLocationWhenInUseUsageDescription": "Mealawe Rider uses your location to confirm you are at the kitchen and to track your deliveries.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Mealawe Rider shares your location during an active shift so customers can see their delivery on the way."
+      }
+    },
+    "android": {
+      "package": "com.mealawerider.app",
+      "backgroundColor": "#037F56",
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/images/adaptive-icon.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.POST_NOTIFICATIONS"
+      ],
+      "googleServicesFile": "./google-services.json"
+    },
+    "plugins": [
+      "expo-router",
+      "./plugins/withNotifeeMavenRepo.js",
+      "@react-native-firebase/app",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Mealawe Rider uses your camera for your attendance selfie.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Mealawe Rider uses your photos so you can attach documents to your registration.",
+          "cameraPermission": "Mealawe Rider uses your camera for your attendance selfie and for pickup and delivery photos.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-empty.png",
+          "imageWidth": 200,
+          "backgroundColor": "#037F56",
+          "dark": {
+            "backgroundColor": "#037F56"
+          }
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Mealawe Rider shares your location during an active shift so customers can see their delivery on the way.",
+          "locationWhenInUsePermission": "Mealawe Rider uses your location to confirm you are at the kitchen and to track your deliveries.",
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "owner": "yagy-team",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "bfb27159-2e74-45a1-8c3e-4091c780a91a"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/bfb27159-2e74-45a1-8c3e-4091c780a91a"
+    }
+  }
+}

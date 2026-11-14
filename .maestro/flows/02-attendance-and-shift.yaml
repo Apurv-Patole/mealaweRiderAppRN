@@ -1,0 +1,36 @@
+# Critical path 2: mark attendance, go online, end the shift, see the summary.
+# Needs: a route for the current slot, the emulator's mocked location set at the kitchen
+# (adb emu geo fix <lng> <lat>), and the camera set to a virtual scene (AVD advanced settings).
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- tapOn: "Route"
+- assertVisible: ".* is open"
+- tapOn: "Take attendance selfie"
+# Step one: the start odometer reading and its photo.
+- tapOn: "Odometer reading (km)"
+- inputText: "10000"
+- tapOn: "Take a photo of the odometer"
+- tapOn:
+    text: "Take photo"
+    optional: true
+- tapOn: "Continue to selfie"
+# Step two: the selfie.
+# The camera screen differs per device: capture with the shutter and confirm.
+- tapOn:
+    text: "Take photo"
+    optional: true
+- assertVisible: "You are online"
+- tapOn: "End shift"
+- tapOn: "End shift"
+# The shift only ends once the end odometer reading and photo are given.
+- tapOn: "Odometer reading (km)"
+- inputText: "10020"
+- tapOn: "Take a photo of the odometer"
+- tapOn:
+    text: "Take photo"
+    optional: true
+- tapOn: "End shift"
+- assertVisible: "Shift complete"
+- tapOn: "Done"
+- assertVisible: "Route"

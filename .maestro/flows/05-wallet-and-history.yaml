@@ -1,0 +1,13 @@
+# Critical path 5: wallet tabs and the history screens open and show data or a clear empty state.
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- tapOn: "Profile"
+- tapOn: "Wallet and earnings"
+- assertVisible: "Wallet balance"
+- tapOn: "Salary"
+- assertVisible: "Base salary|No salary has been recorded.*"
+- tapOn: "Incentives"
+- tapOn: "History"
+- back
+- assertVisible: "Permissions.*|App permissions"

@@ -1,0 +1,10 @@
+# Critical path 1: install, sign in, see the four tabs, stay signed in after a restart.
+appId: com.mealawerider.app
+---
+- runFlow: ../subflows/sign-in.yaml
+- assertVisible: "Route"
+- assertVisible: "Profile"
+- stopApp
+- launchApp
+- assertVisible: "Home"
+- assertNotVisible: "Send code"
