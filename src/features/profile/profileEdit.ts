@@ -117,6 +117,30 @@ export function validateProfile(draft: ProfileDraft): ProfileErrors {
   return errors;
 }
 
+export type EditTab = 'personal' | 'bank' | 'documents' | 'address';
+
+export const EDIT_TABS: readonly { value: EditTab; label: string }[] = [
+  { value: 'personal', label: 'Personal' },
+  { value: 'bank', label: 'Bank' },
+  { value: 'documents', label: 'Documents' },
+  { value: 'address', label: 'Address' },
+];
+
+const TAB_OF_ERROR: Readonly<Record<string, EditTab>> = {
+  name: 'personal',
+  email: 'personal',
+  emergencyContactNo: 'personal',
+  bankIfscCode: 'bank',
+  upiId: 'bank',
+  'residenceAddress.pincode': 'address',
+};
+
+/** The first tab (in tab order) that holds a field with an error, or null when there are none. */
+export function firstTabWithError(errors: ProfileErrors): EditTab | null {
+  const withErrors = new Set(Object.keys(errors).map((key) => TAB_OF_ERROR[key]));
+  return EDIT_TABS.find((tab) => withErrors.has(tab.value))?.value ?? null;
+}
+
 interface FormTarget {
   append: (name: string, value: string | PhotoFile) => void;
 }

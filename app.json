@@ -22,6 +22,9 @@
         ],
         "NSLocationWhenInUseUsageDescription": "Mealawe Rider uses your location to confirm you are at the kitchen and to track your deliveries.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Mealawe Rider shares your location during an active shift so customers can see their delivery on the way."
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyCtIAU1RAa32Y9at1VnmL-fa79AP0NPreQ"
       }
     },
     "android": {
@@ -44,7 +47,12 @@
         "android.permission.FOREGROUND_SERVICE_LOCATION",
         "android.permission.POST_NOTIFICATIONS"
       ],
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCtIAU1RAa32Y9at1VnmL-fa79AP0NPreQ"
+        }
+      }
     },
     "plugins": [
       "expo-router",

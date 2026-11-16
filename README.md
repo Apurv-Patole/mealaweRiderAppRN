@@ -85,7 +85,7 @@ Manual only (no automatic trigger). Each builds Android and iOS, and sends iOS t
 5. Upload an APNs key in Firebase Console → Cloud Messaging, or push will not reach iPhones.
 
 ### Both
-- `GOOGLE_MAPS_API_KEY` as an EAS environment variable (`eas env:create`) or a local `.env`. It is not committed. Enable Maps SDK for Android and iOS on the key. Without it the app works but the map shows a notice.
+- Maps key: the customer app's key is committed in `app.json` (iOS and Android). Set `GOOGLE_MAPS_API_KEY` (EAS env var via `eas env:create`, or a local `.env`) to override it. In Google Cloud Console, add `com.mealawerider.app` (iOS bundle id and Android package + SHA-1) to the key's allowed apps, and enable Maps SDK for Android and iOS, or the map shows blank tiles.
 - `google-services.json` (Android Firebase) is committed.
 
 ## Project layout

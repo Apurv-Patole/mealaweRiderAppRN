@@ -1,4 +1,5 @@
-import { View } from 'react-native';
+import { useState } from 'react';
+import { type LayoutChangeEvent, View } from 'react-native';
 import Svg, { Defs, LinearGradient, RadialGradient, Rect, Stop } from 'react-native-svg';
 
 import { AppText } from '@/components/ui';
@@ -19,6 +20,8 @@ interface ProfileHeroProps {
 
 const MIN_TOP_INSET = 24;
 const AVATAR = 96;
+/** Figma's glow fades to clear at 70% of a 226 px radius, so it reaches past the 320 px box's edge. */
+const GLOW_RADIUS = 226;
 
 function Pill({ dot, dotSize, label, bg, ink, border }: { dot: string; dotSize: number; label: string; bg: string; ink: string; border?: string }) {
   return (
@@ -33,6 +36,11 @@ function Pill({ dot, dotSize, label, bg, ink, border }: { dot: string; dotSize: 
         backgroundColor: bg,
         borderWidth: border ? 1 : 0,
         borderColor: border,
+        shadowColor: '#000000',
+        shadowOpacity: 0.05,
+        shadowRadius: border ? 2 : 1,
+        shadowOffset: { width: 0, height: 1 },
+        elevation: 1,
       }}>
       <View style={{ width: dotSize, height: dotSize, borderRadius: dotSize / 2, backgroundColor: dot }} />
       <AppText variant="caption" style={{ color: ink, fontFamily: FONT_FAMILY.semibold, fontSize: 12, lineHeight: 16 }}>
@@ -47,9 +55,15 @@ export function ProfileHero({ name, phoneNo, routeNo, isActive, topInset }: Prof
   const c = useProfileColors();
   const phone = heroPhone(phoneNo);
   const route = heroRoute(routeNo);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const onLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));
+  };
 
   return (
     <View
+      onLayout={onLayout}
       style={{
         paddingTop: Math.max(topInset, MIN_TOP_INSET) + 16,
         paddingBottom: 64,
@@ -58,22 +72,25 @@ export function ProfileHero({ name, phoneNo, routeNo, isActive, topInset }: Prof
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,
         overflow: 'hidden',
+        backgroundColor: c.heroMid,
       }}>
-      <Svg width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} preserveAspectRatio="none" viewBox="0 0 100 100">
-        <Defs>
-          <LinearGradient id="hero" x1="0.2" y1="0" x2="0.8" y2="1">
-            <Stop offset="0" stopColor={c.heroFrom} />
-            <Stop offset="0.45" stopColor={c.heroMid} />
-            <Stop offset="1" stopColor={c.heroTo} />
-          </LinearGradient>
-        </Defs>
-        <Rect x="0" y="0" width="100" height="100" fill="url(#hero)" />
-      </Svg>
+      {size.width > 0 ? (
+        <Svg width={size.width} height={size.height} style={{ position: 'absolute', top: 0, left: 0 }}>
+          <Defs>
+            <LinearGradient id="hero" x1="0.4" y1="0" x2="0.6" y2="1">
+              <Stop offset="0" stopColor={c.heroFrom} />
+              <Stop offset="0.45" stopColor={c.heroMid} />
+              <Stop offset="1" stopColor={c.heroTo} />
+            </LinearGradient>
+          </Defs>
+          <Rect x="0" y="0" width={size.width} height={size.height} fill="url(#hero)" />
+        </Svg>
+      ) : null}
 
       <View pointerEvents="none" style={{ position: 'absolute', right: -80, top: -120, width: 320, height: 320 }}>
         <Svg width={320} height={320}>
           <Defs>
-            <RadialGradient id="glow" cx="160" cy="160" r="160" gradientUnits="userSpaceOnUse">
+            <RadialGradient id="glow" cx="160" cy="160" r={GLOW_RADIUS} gradientUnits="userSpaceOnUse">
               <Stop offset="0" stopColor={HERO_FIXED.demoLime} stopOpacity="0.12" />
               <Stop offset="0.7" stopColor={HERO_FIXED.demoLime} stopOpacity="0" />
             </RadialGradient>
